@@ -12,8 +12,8 @@ use Mix.Config
 config :chatsnek, ChatSnekWeb.Endpoint,
   url: [host: "example.com", port: 80]
 
-# Print debug messages in production
-config :logger, level: :debug
+# Do not print debug messages in production
+config :logger, level: :info
 
 # ## SSL Support
 #
