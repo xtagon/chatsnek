@@ -1,6 +1,6 @@
 FROM bitwalker/alpine-elixir-phoenix:latest
 
-EXPOSE 5000
+EXPOSE 80
 
 ARG SECRET_KEY_BASE=${SECRET_KEY_BASE}
 ARG CHAT_USER=${CHAT_USER}
@@ -12,7 +12,7 @@ ARG SNAKE_HEAD=${SNAKE_HEAD}
 ARG SNAKE_TAIL=${SNAKE_TAIL}
 ARG TURN_TIMEOUT_BUFFER=${TURN_TIMEOUT_BUFFER}
 
-ENV PORT=5000 MIX_ENV=prod
+ENV PORT=80 MIX_ENV=prod
 
 ADD mix.exs mix.lock ./
 RUN mix do deps.get, deps.compile
