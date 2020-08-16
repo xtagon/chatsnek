@@ -7,7 +7,7 @@ defmodule ChatSnek.VoteManager do
     Agent.start_link(fn -> nil end, name: VoteManager)
   end
 
-  def cast_vote(direction, sender) do
+  def cast_vote(direction, _sender) do
     Agent.update(VoteManager, fn _state -> direction end)
   end
 
