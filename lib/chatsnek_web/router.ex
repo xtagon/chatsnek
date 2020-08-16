@@ -5,8 +5,13 @@ defmodule ChatSnekWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ChatSnekWeb do
+  scope "/", ChatSnekWeb do
     pipe_through :api
+
+    get "/", BattlesnakeController, :index
+    post "/start", BattlesnakeController, :start
+    post "/move", BattlesnakeController, :move
+    post "/end", BattlesnakeController, :_end
   end
 
   # Enables LiveDashboard only for development

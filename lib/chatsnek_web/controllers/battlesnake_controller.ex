@@ -1,0 +1,52 @@
+defmodule ChatSnekWeb.BattlesnakeController do
+  use ChatSnekWeb, :controller
+  alias ChatSnek.VoteManager
+  require Logger
+
+  def index(conn, _params) do
+    config = get_config()
+    json(conn, %{
+      "apiversion" => 1,
+      "author" => config[:author],
+      "color" => config[:color],
+      "head" => config[:head],
+      "tail" => config[:tail]
+    })
+  end
+
+  def start(conn, params) do
+    with %{"game" => %{"id" => game_id}} <- params do
+      Logger.info("Game started: game_id=#{game_id}")
+    end
+
+    json(conn, %{})
+  end
+
+  def move(conn, params) do
+    with %{"game" => %{"timeout" => timeout}} <- params do
+      Process.sleep(buffered_timeout(timeout))
+    end
+
+    move = VoteManager.most_recent_vote
+
+    json(conn, %{"move" => move})
+  end
+
+  def _end(conn, params) do
+    with %{"game" => %{"id" => game_id}} <- params do
+      Logger.info("Game ended: game_id=#{game_id}")
+    end
+
+    json(conn, %{})
+  end
+
+  defp buffered_timeout(game_timeout) do
+    config = get_config()
+    buffer = config[:turn_timeout_buffer]
+    max(0, min(game_timeout, game_timeout - buffer))
+  end
+
+  defp get_config do
+    Application.get_env(:chatsnek, :battlesnake)
+  end
+end

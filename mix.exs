@@ -38,7 +38,9 @@ defmodule ChatSnek.MixProject do
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:vapor, "~> 0.10"},
+      {:tmi, "~> 0.3.0"}
     ]
   end
 

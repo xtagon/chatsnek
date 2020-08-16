@@ -1,18 +1,31 @@
 # ChatSnek
 
-To start your Phoenix server:
+Twitch chat plays [Battlesnake][battlesnake].
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server`
+## How It Works
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+ChatSnek listens for these commands in the Twitch chat for BattlesnakeOfficial:
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+- `!up`
+- `!down`
+- `!left`
+- `!right`
 
-## Learn more
+When ChatSnek plays a turn for a game of Battlesnake, it waits a small amount
+of time (depending on the game's timeout setting) and then plays the move
+corresponding to the most recently seen command in the chat.
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Open Invite
+
+If you have any questions, or just wish to geek out and chat about Battlesnake
+or Elixir or programming in general, feel free to reach out! I love talking
+with people and sharing tips and tricks.
+
+You can reach me at [xtagon@gmail.com](mailto:xtagon@gmail.com), or catch me in
+[Battlesnake Slack][slack] (username: `@xtagon`).
+
+## License
+
+This project is released under the terms of the [MIT License](LICENSE.txt).
+
+[battlesnake]: https://play.battlesnake.com/

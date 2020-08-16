@@ -6,15 +6,35 @@ defmodule ChatSnek.Application do
   use Application
 
   def start(_type, _args) do
+    config = Vapor.load!(ChatSnek.Config)
+
+    Application.put_env(:chatsnek, :battlesnake, [
+      author: config.battlesnake.snake_author,
+      color: config.battlesnake.snake_color,
+      head: config.battlesnake.snake_head,
+      tail: config.battlesnake.snake_tail,
+      turn_timeout_buffer: config.battlesnake.turn_timeout_buffer
+    ])
+
+    tmi_opts = [
+      user: config.tmi.user,
+      pass: config.tmi.pass,
+      chats: config.tmi.chats,
+      handler: ChatSnek.ChatHandler,
+      capabilities: ["tags", "commands"]
+    ]
+
     children = [
       # Start the Telemetry supervisor
       ChatSnekWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: ChatSnek.PubSub},
       # Start the Endpoint (http/https)
-      ChatSnekWeb.Endpoint
-      # Start a worker by calling: ChatSnek.Worker.start_link(arg)
-      # {ChatSnek.Worker, arg}
+      ChatSnekWeb.Endpoint,
+      # Start the vote manager
+      ChatSnek.VoteManager,
+      # Start the chat handler
+      {TMI.Supervisor, tmi_opts}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
