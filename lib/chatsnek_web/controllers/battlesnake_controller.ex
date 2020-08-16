@@ -27,9 +27,14 @@ defmodule ChatSnekWeb.BattlesnakeController do
       Process.sleep(buffered_timeout(timeout))
     end
 
-    move = VoteManager.most_recent_vote
+    direction = case VoteManager.most_recent_vote do
+      nil -> "up"
+      vote -> vote
+    end
 
-    json(conn, %{"move" => move})
+    Logger.info("Decided to move #{direction}")
+
+    json(conn, %{"move" => direction})
   end
 
   def _end(conn, params) do
