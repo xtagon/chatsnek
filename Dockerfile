@@ -21,6 +21,4 @@ ADD . .
 
 RUN mix compile
 
-USER default
-
 CMD ["mix", "phx.server"]
