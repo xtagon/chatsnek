@@ -27,7 +27,7 @@ defmodule ChatSnekWeb.BattlesnakeController do
       Process.sleep(buffered_timeout(timeout))
     end
 
-    direction = case VoteManager.most_recent_vote do
+    direction = case VoteManager.finalize_vote do
       nil -> "up"
       vote -> vote
     end
