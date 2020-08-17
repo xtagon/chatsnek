@@ -19,8 +19,8 @@ defmodule ChatSnek.VoteManager do
     Agent.get_and_update(VoteManager, fn {votes, last_move_played} ->
       top_vote = votes
       |> Map.values
-      |> Enum.reduce(%{}, fn x, acc -> Map.update(acc, x, 1, &(&1 + 1)) end)
-      |> Enum.sort(fn {_, a}, {_, b} -> a >= b end)
+      |> Enum.reduce(%{}, fn move, move_scores -> Map.update(move_scores, move, 1, &(&1 + 1)) end)
+      |> Enum.sort(fn {_move_a, score_a}, {_move_b, score_b} -> score_a >= score_b end)
       |> Enum.at(0)
 
       case top_vote do
