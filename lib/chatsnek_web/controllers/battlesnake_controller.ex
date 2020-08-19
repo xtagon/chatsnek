@@ -47,8 +47,14 @@ defmodule ChatSnekWeb.BattlesnakeController do
 
   defp buffered_timeout(game_timeout) do
     config = get_config()
+    override = config[:turn_timeout_override]
     buffer = config[:turn_timeout_buffer]
-    max(0, min(game_timeout, game_timeout - buffer))
+
+    if is_integer(override) and override > 0 do
+      override
+    else
+      max(0, min(game_timeout, game_timeout - buffer))
+    end
   end
 
   defp get_config do

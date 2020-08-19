@@ -13,7 +13,8 @@ defmodule ChatSnek.Application do
       color: config.battlesnake.snake_color,
       head: config.battlesnake.snake_head,
       tail: config.battlesnake.snake_tail,
-      turn_timeout_buffer: config.battlesnake.turn_timeout_buffer
+      turn_timeout_buffer: config.battlesnake.turn_timeout_buffer,
+      turn_timeout_override: config.battlesnake.turn_timeout_override
     ])
 
     tmi_opts = [
