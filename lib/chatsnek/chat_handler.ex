@@ -30,7 +30,8 @@ defmodule ChatSnek.ChatHandler do
   end
 
   def handle_game_move_decided(direction) do
-    say "Going #{direction} now. Where should I go next?"
+    emoji = direction_emoji(direction)
+    say "#{emoji} Going #{direction} now. Where should I go next?"
   end
 
   def handle_game_ended do
@@ -42,4 +43,10 @@ defmodule ChatSnek.ChatHandler do
     |> Keyword.fetch!(:chat)
     |> TMI.message(message)
   end
+
+  defp direction_emoji("up"), do: "⬆️"
+  defp direction_emoji("down"), do: "⬇️"
+  defp direction_emoji("left"), do: "⬅️"
+  defp direction_emoji("right"), do: "➡️"
+  defp direction_emoji(_direction), do: ""
 end
