@@ -1,6 +1,9 @@
 defmodule ChatSnekWeb.BattlesnakeController do
   use ChatSnekWeb, :controller
+
+  alias ChatSnek.ChatHandler
   alias ChatSnek.VoteManager
+
   require Logger
 
   def index(conn, _params) do
@@ -19,6 +22,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
       Logger.info("Game started: game_id=#{game_id}")
     end
 
+    ChatHandler.handle_game_started
+
     json(conn, %{})
   end
 
@@ -34,6 +39,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
 
     Logger.info("Decided to move #{direction}")
 
+    ChatHandler.handle_game_move_decided(direction)
+
     json(conn, %{"move" => direction})
   end
 
@@ -41,6 +48,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
     with %{"game" => %{"id" => game_id}} <- params do
       Logger.info("Game ended: game_id=#{game_id}")
     end
+
+    ChatHandler.handle_game_ended
 
     json(conn, %{})
   end

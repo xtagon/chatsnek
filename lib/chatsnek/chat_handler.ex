@@ -24,4 +24,22 @@ defmodule ChatSnek.ChatHandler do
 
   # Ignore anything that isn't a valid command
   def handle_command(_command, _sender, _chat), do: nil
+
+  def handle_game_started do
+    say "Where should I go, chat? Commands are: !up !down !left !right"
+  end
+
+  def handle_game_move_decided(direction) do
+    say "Going #{direction} now. Where should I go next?"
+  end
+
+  def handle_game_ended do
+    say "gg"
+  end
+
+  defp say(message) do
+    Application.get_env(:chatsnek, :twitch)
+    |> Keyword.fetch!(:chat)
+    |> TMI.message(message)
+  end
 end
