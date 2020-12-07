@@ -11,6 +11,7 @@ defmodule ChatSnek.Config do
 
   config :battlesnake, env([
     {:snake_author, "SNAKE_AUTHOR", required: false},
+    {:snake_version, "SNAKE_VERSION", required: false},
     {:snake_color, "SNAKE_COLOR", required: false},
     {:snake_head, "SNAKE_HEAD", required: false},
     {:snake_tail, "SNAKE_TAIL", required: false},

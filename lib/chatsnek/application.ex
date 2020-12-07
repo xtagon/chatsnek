@@ -10,6 +10,7 @@ defmodule ChatSnek.Application do
 
     Application.put_env(:chatsnek, :battlesnake, [
       author: config.battlesnake.snake_author,
+      version: config.battlesnake.snake_version,
       color: config.battlesnake.snake_color,
       head: config.battlesnake.snake_head,
       tail: config.battlesnake.snake_tail,

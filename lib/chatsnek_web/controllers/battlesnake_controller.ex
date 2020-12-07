@@ -12,6 +12,7 @@ defmodule ChatSnekWeb.BattlesnakeController do
     config = get_config()
     json(conn, %{
       "apiversion" => "1",
+      "version" => config[:version],
       "author" => config[:author],
       "color" => config[:color],
       "head" => config[:head],
