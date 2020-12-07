@@ -1,9 +1,12 @@
 defmodule ChatSnekWeb.BattlesnakeController do
   use ChatSnekWeb, :controller
 
-  alias ChatSnek.ChatSpeaker
-  alias ChatSnek.DebugLogger
-  alias ChatSnek.VoteManager
+  alias ChatSnek.{
+    ChatSpeaker,
+    DebugLogger,
+    VoteManager,
+    WaitForTurn
+  }
 
   def index(conn, _params) do
     config = get_config()
@@ -23,10 +26,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
     json(conn, %{})
   end
 
-  def move(conn, params) do
-    with %{"game" => %{"timeout" => timeout}} <- params do
-      Process.sleep(buffered_timeout(timeout))
-    end
+  def move(conn, %{"game" => %{"timeout" => timeout}}) do
+    WaitForTurn.wait_for_game_timeout(timeout)
 
     direction = case VoteManager.finalize_vote do
       nil -> "up"
@@ -44,18 +45,6 @@ defmodule ChatSnekWeb.BattlesnakeController do
     ChatSpeaker.handle_game_ended(game_id)
 
     json(conn, %{})
-  end
-
-  defp buffered_timeout(game_timeout) do
-    config = get_config()
-    override = config[:turn_timeout_override]
-    buffer = config[:turn_timeout_buffer]
-
-    if is_integer(override) and override > 0 do
-      override
-    else
-      max(0, min(game_timeout, game_timeout - buffer))
-    end
   end
 
   defp get_config do
