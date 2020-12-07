@@ -2,9 +2,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
   use ChatSnekWeb, :controller
 
   alias ChatSnek.ChatHandler
+  alias ChatSnek.DebugLogger
   alias ChatSnek.VoteManager
-
-  require Logger
 
   def index(conn, _params) do
     config = get_config()
@@ -17,12 +16,9 @@ defmodule ChatSnekWeb.BattlesnakeController do
     })
   end
 
-  def start(conn, params) do
-    with %{"game" => %{"id" => game_id}} <- params do
-      Logger.info("Game started: game_id=#{game_id}")
-    end
-
-    ChatHandler.handle_game_started
+  def start(conn, %{"game" => %{"id" => game_id}}) do
+    DebugLogger.handle_game_started(game_id)
+    ChatHandler.handle_game_started(game_id)
 
     json(conn, %{})
   end
@@ -37,19 +33,15 @@ defmodule ChatSnekWeb.BattlesnakeController do
       vote -> vote
     end
 
-    Logger.info("Decided to move #{direction}")
-
+    DebugLogger.handle_game_move_decided(direction)
     ChatHandler.handle_game_move_decided(direction)
 
     json(conn, %{"move" => direction})
   end
 
-  def _end(conn, params) do
-    with %{"game" => %{"id" => game_id}} <- params do
-      Logger.info("Game ended: game_id=#{game_id}")
-    end
-
-    ChatHandler.handle_game_ended
+  def _end(conn, %{"game" => %{"id" => game_id}}) do
+    DebugLogger.handle_game_ended(game_id)
+    ChatHandler.handle_game_ended(game_id)
 
     json(conn, %{})
   end

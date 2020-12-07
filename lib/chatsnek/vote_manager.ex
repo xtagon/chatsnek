@@ -1,7 +1,6 @@
 defmodule ChatSnek.VoteManager do
   alias __MODULE__
   use Agent
-  require Logger
 
   def start_link(_opts \\ %{}) do
     state = {%{}, nil}

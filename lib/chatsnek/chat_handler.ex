@@ -1,5 +1,7 @@
 defmodule ChatSnek.ChatHandler do
   use TMI.Handler
+
+  alias ChatSnek.DebugLogger
   alias ChatSnek.VoteManager
 
   @directions ["up", "down", "left", "right"]
@@ -18,14 +20,14 @@ defmodule ChatSnek.ChatHandler do
   end
 
   def handle_command(direction, sender, _chat) when direction in @directions do
-    Logger.info("Chat: #{sender} voted to move #{direction}")
+    DebugLogger.handle_vote_cast(direction, sender)
     VoteManager.cast_vote(direction, sender)
   end
 
   # Ignore anything that isn't a valid command
   def handle_command(_command, _sender, _chat), do: nil
 
-  def handle_game_started do
+  def handle_game_started(_game_id) do
     say "Where should I go, chat? Commands are: !up !down !left !right"
   end
 
@@ -34,7 +36,7 @@ defmodule ChatSnek.ChatHandler do
     say "#{emoji} Going #{direction} now. Where should I go next?"
   end
 
-  def handle_game_ended do
+  def handle_game_ended(_game_id) do
     say "gg"
   end
 
