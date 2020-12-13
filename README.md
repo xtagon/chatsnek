@@ -4,6 +4,12 @@ Twitch chat plays [Battlesnake][battlesnake].
 
 ![Avatar of a small Battlesnake game board with a purple snake near food](chatsnek_avatar.png)
 
+## Live Events
+
+If you'd like to participate in live games with ChatSnek, follow
+[BattlesnakeOfficial](battlesnake-twitch) and [Xtagon](xtagon-twitch) on
+Twitch.
+
 ## How It Works
 
 ChatSnek listens for these commands in the Twitch chat for BattlesnakeOfficial:
@@ -31,3 +37,6 @@ You can reach me at [xtagon@gmail.com](mailto:xtagon@gmail.com), or catch me in
 This project is released under the terms of the [MIT License](LICENSE.txt).
 
 [battlesnake]: https://play.battlesnake.com/
+[battlesnake-twitch]: https://www.twitch.tv/battlesnakeofficial
+[xtagon-twitch]: https://www.twitch.tv/xtagon
+[slack]: https://battlesnake.slack.com/
