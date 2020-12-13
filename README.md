@@ -2,6 +2,8 @@
 
 Twitch chat plays [Battlesnake][battlesnake].
 
+![Avatar of a small Battlesnake game board with a purple snake near food](chatsnek_avatar.png)
+
 ## How It Works
 
 ChatSnek listens for these commands in the Twitch chat for BattlesnakeOfficial:
@@ -13,7 +15,7 @@ ChatSnek listens for these commands in the Twitch chat for BattlesnakeOfficial:
 
 When ChatSnek plays a turn for a game of Battlesnake, it waits a small amount
 of time (depending on the game's timeout setting) and then plays the move
-corresponding to the most recently seen command in the chat.
+corresponding to the highest voted direction from the chat.
 
 ## Open Invite
 
