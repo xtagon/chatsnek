@@ -24,6 +24,11 @@ defmodule ChatSnek.ChatHandler do
     VoteManager.cast_vote(direction, sender)
   end
 
+  def handle_command("u", sender, chat), do: handle_command("up", sender, chat)
+  def handle_command("d", sender, chat), do: handle_command("down", sender, chat)
+  def handle_command("l", sender, chat), do: handle_command("left", sender, chat)
+  def handle_command("r", sender, chat), do: handle_command("right", sender, chat)
+
   # Ignore anything that isn't a valid command
   def handle_command(_command, _sender, _chat), do: nil
 end
