@@ -14,11 +14,13 @@ defmodule ChatSnek.VoteManager do
 
   def finalize_vote() do
     Agent.get_and_update(VoteManager, fn state ->
+      vote_counts = State.count_votes(state)
+
       case State.top_vote(state) do
         nil ->
-          {state.last_move_played, state}
+          {{state.last_move_played, vote_counts}, state}
         {top_move, _top_score} ->
-          {top_move, State.reset(top_move)}
+          {{top_move, vote_counts}, State.reset(top_move)}
       end
     end)
   end
