@@ -27,7 +27,7 @@ defmodule ChatSnekWeb.BattlesnakeController do
     json(conn, %{})
   end
 
-  def move(conn, %{"game" => %{"timeout" => timeout}}) do
+  def move(conn, %{"game" => %{"timeout" => timeout}, "turn" => turn}) do
     WaitForTurn.wait_for_game_timeout(timeout)
 
     direction = case VoteManager.finalize_vote do
@@ -35,8 +35,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
       vote -> vote
     end
 
-    DebugLogger.handle_game_move_decided(direction)
-    ChatSpeaker.handle_game_move_decided(direction)
+    DebugLogger.handle_game_move_decided(direction, turn)
+    ChatSpeaker.handle_game_move_decided(direction, turn)
 
     json(conn, %{"move" => direction})
   end
