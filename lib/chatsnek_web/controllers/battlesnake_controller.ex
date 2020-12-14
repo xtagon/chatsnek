@@ -30,15 +30,20 @@ defmodule ChatSnekWeb.BattlesnakeController do
   def move(conn, %{"game" => %{"timeout" => timeout}, "turn" => turn}) do
     WaitForTurn.wait_for_game_timeout(timeout)
 
-    direction = case VoteManager.finalize_vote do
-      nil -> "up"
-      vote -> vote
+    {move, shout} = case VoteManager.finalize_vote do
+      {nil, _vote_counts} ->
+        {"up", nil}
+      {top_voted_move, vote_counts} ->
+        {top_voted_move, shout_vote_counts(vote_counts)}
     end
 
-    DebugLogger.handle_game_move_decided(direction, turn)
-    ChatSpeaker.handle_game_move_decided(direction, turn)
+    DebugLogger.handle_game_move_decided(move, turn)
+    ChatSpeaker.handle_game_move_decided(move, turn)
 
-    json(conn, %{"move" => direction})
+    json(conn, %{
+      "move" => move,
+      "shout" => shout
+    })
   end
 
   def _end(conn, %{"game" => %{"id" => game_id}}) do
@@ -46,6 +51,12 @@ defmodule ChatSnekWeb.BattlesnakeController do
     ChatSpeaker.handle_game_ended(game_id)
 
     json(conn, %{})
+  end
+
+  defp shout_vote_counts(vote_counts) do
+    vote_counts
+    |> Enum.map(fn {direction, score} -> "#{direction}:#{score}" end)
+    |> Enum.join(", ")
   end
 
   defp get_config do

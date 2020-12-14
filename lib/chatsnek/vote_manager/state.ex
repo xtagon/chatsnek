@@ -15,10 +15,19 @@ defmodule ChatSnek.VoteManager.State do
     %State{state | votes: next_votes}
   end
 
-  def top_vote(%State{votes: votes}) do
+  def count_votes(%State{votes: votes}) do
     votes
     |> Map.values
     |> Enum.reduce(%{}, fn move, move_scores -> Map.update(move_scores, move, 1, &(&1 + 1)) end)
+    |> Map.put_new("up", 0)
+    |> Map.put_new("down", 0)
+    |> Map.put_new("left", 0)
+    |> Map.put_new("right", 0)
+  end
+
+  def top_vote(%State{} = state) do
+    state
+    |> count_votes
     |> Enum.sort(fn {_move_a, score_a}, {_move_b, score_b} -> score_a >= score_b end)
     |> Enum.at(0)
   end
