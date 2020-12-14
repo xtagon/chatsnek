@@ -3,9 +3,10 @@ defmodule ChatSnek.ChatSpeaker do
     say "Where should I go, chat? Commands are: !up !down !left !right"
   end
 
-  def handle_game_move_decided(direction) do
+  def handle_game_move_decided(direction, turn) do
     emoji = direction_emoji(direction)
-    say "#{emoji} Going #{direction} now. Where should I go next?"
+    next_turn = turn + 1
+    say "#{emoji} Going #{direction} on turn #{turn}. Cast your votes for turn #{next_turn}!"
   end
 
   def handle_game_ended(_game_id) do
