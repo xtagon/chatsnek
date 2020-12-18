@@ -1,4 +1,4 @@
-defmodule ChatSnekVoteManaterStateTest do
+defmodule ChatSnekVoteManagerStateTest do
   use ExUnit.Case, async: true
 
   alias ChatSnek.VoteManager.State
