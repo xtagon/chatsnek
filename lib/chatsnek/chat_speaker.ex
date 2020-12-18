@@ -13,6 +13,10 @@ defmodule ChatSnek.ChatSpeaker do
     say "gg"
   end
 
+  def handle_wtf do
+    say "Hey, I'm not the one driving, chat ;)"
+  end
+
   defp say(message) do
     Application.get_env(:chatsnek, :twitch)
     |> Keyword.fetch!(:chat)

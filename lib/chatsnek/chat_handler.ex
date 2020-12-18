@@ -1,6 +1,7 @@
 defmodule ChatSnek.ChatHandler do
   use TMI.Handler
 
+  alias ChatSnek.ChatSpeaker
   alias ChatSnek.DebugLogger
   alias ChatSnek.VoteManager
 
@@ -28,6 +29,11 @@ defmodule ChatSnek.ChatHandler do
   def handle_command("d", sender, chat), do: handle_command("down", sender, chat)
   def handle_command("l", sender, chat), do: handle_command("left", sender, chat)
   def handle_command("r", sender, chat), do: handle_command("right", sender, chat)
+
+  # "I want that chatbot to react to WTF" -- BattlesnakeOfficial
+  def handle_command("wtf", _sender, _chat) do
+    ChatSpeaker.handle_wtf
+  end
 
   # Ignore anything that isn't a valid command
   def handle_command(_command, _sender, _chat), do: nil
