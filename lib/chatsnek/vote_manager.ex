@@ -19,6 +19,8 @@ defmodule ChatSnek.VoteManager do
       case State.top_vote(state) do
         nil ->
           {{state.last_move_played, vote_counts}, state}
+        {_top_move, 0} ->
+          {{state.last_move_played, vote_counts}, state}
         {top_move, _top_score} ->
           {{top_move, vote_counts}, State.reset(top_move)}
       end
