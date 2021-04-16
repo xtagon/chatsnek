@@ -4,6 +4,7 @@ defmodule ChatSnekWeb.BattlesnakeController do
   alias ChatSnek.{
     ChatSpeaker,
     DebugLogger,
+    MoveSafety,
     VoteManager,
     WaitForTurn
   }
@@ -27,15 +28,19 @@ defmodule ChatSnekWeb.BattlesnakeController do
     json(conn, %{})
   end
 
-  def move(conn, %{"game" => %{"timeout" => timeout}, "turn" => turn}) do
+  def move(conn, %{"game" => %{"timeout" => timeout}, "turn" => turn} = params) do
     WaitForTurn.wait_for_game_timeout(timeout)
 
-    {move, shout} = case VoteManager.finalize_vote do
-      {nil, _vote_counts} ->
-        {"up", nil}
-      {top_voted_move, vote_counts} ->
-        {top_voted_move, shout_vote_counts(vote_counts)}
+    {top_voted_move, vote_counts} = VoteManager.finalize_vote
+
+    move = if top_voted_move != nil && vote_counts[top_voted_move] > 0 do
+      top_voted_move
+    else
+      safe_move = MoveSafety.safe_moves(params) |> Enum.random
+      safe_move || top_voted_move || "up"
     end
+
+    shout = shout_vote_counts(vote_counts)
 
     DebugLogger.handle_game_move_decided(move, turn)
     ChatSpeaker.handle_game_move_decided(move, turn)
