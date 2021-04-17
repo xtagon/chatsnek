@@ -4,9 +4,27 @@ defmodule ChatSnek.Config do
   dotenv()
 
   config :tmi, env([
-    {:user, "CHAT_USER", required: true},
-    {:pass, "CHAT_PASS", required: true},
-    {:chats, "CHAT_CHANNEL", required: true, map: fn channel -> [channel] end}
+    {:user, "CHAT_USER", [
+      required: true
+    ]},
+    {:pass, "CHAT_PASS", [
+      required: true
+    ]},
+    {:chats, "CHAT_CHANNEL", [
+      required: true,
+      map: fn channel -> [channel] end
+    ]},
+    {:admins, "CHAT_ADMINS", [
+      required: true,
+      default: MapSet.new,
+      map: fn csv ->
+        csv
+        |> String.split(",")
+        |> Enum.map(&String.trim/1)
+        |> Enum.map(&String.downcase/1)
+        |> MapSet.new
+      end
+    ]}
   ])
 
   config :battlesnake, env([

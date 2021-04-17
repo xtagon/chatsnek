@@ -16,4 +16,12 @@ defmodule ChatSnek.DebugLogger do
   def handle_vote_cast(direction, voter) do
     Logger.info("Chat: #{voter} voted to move #{direction}")
   end
+
+  def handle_chat_speaker_enabled(user_who_enabled) do
+    Logger.info("Chat: #{user_who_enabled} enabled the chat speaker")
+  end
+
+  def handle_chat_speaker_disabled(user_who_disabled) do
+    Logger.info("Chat: #{user_who_disabled} disabled the chat speaker")
+  end
 end

@@ -5,6 +5,9 @@ defmodule ChatSnek.ChatHandler do
   alias ChatSnek.DebugLogger
   alias ChatSnek.VoteManager
 
+  @chat_disable_command "off"
+  @chat_enable_command "on"
+  @direct_command_keyword "chatsnek"
   @directions ["up", "down", "left", "right"]
 
   @impl true
@@ -18,6 +21,13 @@ defmodule ChatSnek.ChatHandler do
     |> String.trim
     |> String.downcase
     |> handle_command(sender, chat)
+  end
+
+  def handle_command(@direct_command_keyword <> " " <> message, sender, chat) do
+    message
+    |> String.trim
+    |> String.downcase
+    |> handle_direct_command(sender, chat)
   end
 
   def handle_command(direction, sender, _chat) when direction in @directions do
@@ -37,4 +47,27 @@ defmodule ChatSnek.ChatHandler do
 
   # Ignore anything that isn't a valid command
   def handle_command(_command, _sender, _chat), do: nil
+
+  def handle_direct_command(@chat_enable_command, sender, _chat) do
+    if admin?(sender) do
+      DebugLogger.handle_chat_speaker_enabled(sender)
+      ChatSpeaker.enable()
+    end
+  end
+
+  def handle_direct_command(@chat_disable_command, sender, _chat) do
+    if admin?(sender) do
+      DebugLogger.handle_chat_speaker_disabled(sender)
+      ChatSpeaker.disable()
+    end
+  end
+
+  # Ignore anything that isn't a valid direct command
+  def handle_direct_command(_command, _sender, _chat), do: nil
+
+  defp admin?(chat_user) do
+    Application.get_env(:chatsnek, :twitch)
+    |> Keyword.fetch!(:admins)
+    |> MapSet.member?(String.downcase(chat_user))
+  end
 end

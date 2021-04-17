@@ -21,7 +21,8 @@ defmodule ChatSnek.Application do
     twitch_chat = List.first(config.tmi.chats)
 
     Application.put_env(:chatsnek, :twitch, [
-      chat: twitch_chat
+      chat: twitch_chat,
+      admins: config.tmi.admins
     ])
 
     tmi_opts = [
@@ -41,6 +42,8 @@ defmodule ChatSnek.Application do
       ChatSnekWeb.Endpoint,
       # Start the vote manager
       ChatSnek.VoteManager,
+      # Start the chat speaker
+      ChatSnek.ChatSpeaker,
       # Start the chat handler
       {TMI.Supervisor, tmi_opts}
     ]
