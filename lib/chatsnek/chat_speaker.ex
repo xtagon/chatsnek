@@ -30,8 +30,9 @@ defmodule ChatSnek.ChatSpeaker do
     if enabled?() do
       emoji = direction_emoji(direction)
       tally = vote_counts[direction]
+      pluralized_votes = if tally == 1, do: "vote", else: "votes"
       next_turn = turn + 1
-      say "#{emoji} Going #{direction} on turn #{turn} based on #{tally} votes. Cast your vote for turn #{next_turn}!"
+      say "#{emoji} Going #{direction} on turn #{turn} based on #{tally} #{pluralized_votes}. Cast your vote for turn #{next_turn}!"
     end
   end
 

@@ -7,7 +7,8 @@ defmodule ChatSnek.DebugLogger do
 
   def handle_game_move_decided(direction, turn, vote_counts) do
     tally = vote_counts[direction]
-    Logger.info("Decided to move #{direction} on turn #{turn} based on #{tally} votes")
+    pluralized_votes = if tally == 1, do: "vote", else: "votes"
+    Logger.info("Decided to move #{direction} on turn #{turn} based on #{tally} #{pluralized_votes}")
   end
 
   def handle_game_ended(game_id) do
