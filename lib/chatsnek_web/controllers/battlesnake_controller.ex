@@ -42,8 +42,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
 
     shout = shout_vote_counts(vote_counts)
 
-    DebugLogger.handle_game_move_decided(move, turn)
-    ChatSpeaker.handle_game_move_decided(move, turn)
+    DebugLogger.handle_game_move_decided(move, turn, vote_counts)
+    ChatSpeaker.handle_game_move_decided(move, turn, vote_counts)
 
     json(conn, %{
       "move" => move,

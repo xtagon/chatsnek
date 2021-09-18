@@ -26,11 +26,12 @@ defmodule ChatSnek.ChatSpeaker do
     end
   end
 
-  def handle_game_move_decided(direction, turn) do
+  def handle_game_move_decided(direction, turn, vote_counts) do
     if enabled?() do
       emoji = direction_emoji(direction)
+      tally = vote_counts[direction]
       next_turn = turn + 1
-      say "#{emoji} Going #{direction} on turn #{turn}. Cast your votes for turn #{next_turn}!"
+      say "#{emoji} Going #{direction} on turn #{turn} based on #{tally} votes. Cast your vote for turn #{next_turn}!"
     end
   end
 

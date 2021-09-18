@@ -5,8 +5,9 @@ defmodule ChatSnek.DebugLogger do
     Logger.info("Game started: game_id=#{game_id}")
   end
 
-  def handle_game_move_decided(direction, turn) do
-    Logger.info("Decided to move #{direction} on turn #{turn}")
+  def handle_game_move_decided(direction, turn, vote_counts) do
+    tally = vote_counts[direction]
+    Logger.info("Decided to move #{direction} on turn #{turn} based on #{tally} votes")
   end
 
   def handle_game_ended(game_id) do
