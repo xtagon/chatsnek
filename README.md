@@ -30,13 +30,13 @@ or Elixir or programming in general, feel free to reach out! I love talking
 with people and sharing tips and tricks.
 
 You can reach me at [xtagon@gmail.com](mailto:xtagon@gmail.com), or catch me in
-[Battlesnake Slack][slack] (username: `@xtagon`).
+[Battlesnake Discord][battlesnake-discord] (username: `@xtagon`).
 
 ## License
 
 This project is released under the terms of the [MIT License](LICENSE.txt).
 
 [battlesnake]: https://play.battlesnake.com/
+[battlesnake-discord]: https://play.battlesnake.com/discord/
 [battlesnake-twitch]: https://www.twitch.tv/battlesnakeofficial
 [xtagon-twitch]: https://www.twitch.tv/xtagon
-[slack]: https://battlesnake.slack.com/
