@@ -26,4 +26,8 @@ defmodule ChatSnek.VoteManager do
       end
     end)
   end
+
+  def update_last_move_played(last_move_played) do
+    Agent.update(VoteManager, State, :update_last_move_played, [last_move_played])
+  end
 end

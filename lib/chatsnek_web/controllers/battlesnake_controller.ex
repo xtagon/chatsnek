@@ -57,6 +57,10 @@ defmodule ChatSnekWeb.BattlesnakeController do
       end
     end
 
+    if move != top_voted_move do
+      VoteManager.update_last_move_played(move)
+    end
+
     shout = shout_vote_counts(vote_counts)
 
     DebugLogger.handle_game_move_decided(move, turn, vote_counts)

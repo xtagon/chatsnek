@@ -32,6 +32,10 @@ defmodule ChatSnek.VoteManager.State do
     |> Enum.at(0)
   end
 
+  def update_last_move_played(%State{} = state, last_move_played) do
+    %State{state | last_move_played: last_move_played}
+  end
+
   def reset(last_move_played) do
     %State{last_move_played: last_move_played}
   end
