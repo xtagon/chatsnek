@@ -9,6 +9,8 @@ defmodule ChatSnekWeb.BattlesnakeController do
     WaitForTurn
   }
 
+  @fallback_move "up"
+
   def index(conn, _params) do
     config = get_config()
     json(conn, %{
@@ -33,16 +35,25 @@ defmodule ChatSnekWeb.BattlesnakeController do
 
     {top_voted_move, vote_counts} = VoteManager.finalize_vote
 
-    move = if top_voted_move != nil && vote_counts[top_voted_move] > 0 do
+    vote_had_participation = top_voted_move != nil && vote_counts[top_voted_move] > 0
+
+    move = if vote_had_participation do
       top_voted_move
     else
       safe_moves = MoveSafety.safe_moves(params)
+      no_moves_are_safe = Enum.empty?(safe_moves)
 
-      if Enum.empty?(safe_moves) do
-        top_voted_move || "up"
+      if no_moves_are_safe do
+        top_voted_move || @fallback_move
       else
-        safe_move = safe_moves |> Enum.random
-        safe_move || top_voted_move || "up"
+        top_voted_move_is_safe = top_voted_move != nil && Enum.member?(safe_moves, top_voted_move)
+
+        if top_voted_move_is_safe do
+          top_voted_move
+        else
+          safe_move = Enum.random(safe_moves)
+          safe_move || top_voted_move || @fallback_move
+        end
       end
     end
 
