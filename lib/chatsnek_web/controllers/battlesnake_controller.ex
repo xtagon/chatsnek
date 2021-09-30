@@ -41,7 +41,7 @@ defmodule ChatSnekWeb.BattlesnakeController do
       if Enum.empty?(safe_moves) do
         top_voted_move || "up"
       else
-        safe_move = MoveSafety.safe_moves(params) |> Enum.random
+        safe_move = safe_moves |> Enum.random
         safe_move || top_voted_move || "up"
       end
     end
