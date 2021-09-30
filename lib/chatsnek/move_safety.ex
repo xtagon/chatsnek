@@ -1,7 +1,24 @@
 defmodule ChatSnek.MoveSafety do
   @moves ["up", "down", "left", "right"]
 
-  def safe_moves(move_request) do
+  def decide_safe_move(candidate_move, fallback_move, move_request) do
+    safe_moves = safe_moves(move_request)
+    no_moves_are_safe = Enum.empty?(safe_moves)
+
+    if no_moves_are_safe do
+      candidate_move || fallback_move
+    else
+      candidate_move_is_safe = candidate_move != nil && Enum.member?(safe_moves, candidate_move)
+
+      if candidate_move_is_safe do
+        candidate_move
+      else
+        Enum.random(safe_moves) || candidate_move || fallback_move
+      end
+    end
+  end
+
+  defp safe_moves(move_request) do
     width = move_request["board"]["width"]
     height = move_request["board"]["height"]
     head = move_request["you"]["head"]
