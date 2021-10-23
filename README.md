@@ -7,7 +7,7 @@ Twitch chat plays [Battlesnake][battlesnake].
 ## Live Events
 
 If you'd like to participate in live games with ChatSnek, follow
-[BattlesnakeOfficial](battlesnake-twitch) and [Xtagon](xtagon-twitch) on
+[BattlesnakeOfficial][battlesnake-twitch] and [Xtagon][xtagon-twitch] on
 Twitch.
 
 ## How It Works
