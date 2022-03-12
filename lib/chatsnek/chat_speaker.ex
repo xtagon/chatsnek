@@ -4,6 +4,8 @@ defmodule ChatSnek.ChatSpeaker do
   alias __MODULE__
   alias __MODULE__.State
 
+  import ChatSnek.ChatHandler, only: [say: 1]
+
   def start_link(_opts \\ %{}) do
     Agent.start_link(fn -> State.new end, name: ChatSpeaker)
   end
@@ -46,12 +48,6 @@ defmodule ChatSnek.ChatSpeaker do
     if enabled?() do
       say "Hey, I'm not the one driving, chat ;)"
     end
-  end
-
-  defp say(message) do
-    Application.get_env(:chatsnek, :twitch)
-    |> Keyword.fetch!(:chat)
-    |> TMI.message(message)
   end
 
   defp direction_emoji("up"), do: "⬆️"

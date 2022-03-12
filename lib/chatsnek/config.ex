@@ -10,7 +10,7 @@ defmodule ChatSnek.Config do
     {:pass, "CHAT_PASS", [
       required: true
     ]},
-    {:chats, "CHAT_CHANNEL", [
+    {:channels, "CHAT_CHANNEL", [
       required: true,
       map: fn channel -> [channel] end
     ]},

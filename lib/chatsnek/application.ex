@@ -18,18 +18,19 @@ defmodule ChatSnek.Application do
       turn_timeout_override: config.battlesnake.turn_timeout_override
     ])
 
-    twitch_chat = List.first(config.tmi.chats)
+    twitch_channel = List.first(config.tmi.channels)
+    twitch_channels = [twitch_channel]
 
     Application.put_env(:chatsnek, :twitch, [
-      chat: twitch_chat,
+      channel: twitch_channel,
       admins: config.tmi.admins
     ])
 
     tmi_opts = [
+      bot: ChatSnek.ChatHandler,
       user: config.tmi.user,
       pass: config.tmi.pass,
-      chats: [twitch_chat],
-      handler: ChatSnek.ChatHandler,
+      channels: twitch_channels,
       capabilities: ["tags", "commands"]
     ]
 
